@@ -209,3 +209,14 @@ stopButton.addEventListener("click", () => {
 newChatButton.addEventListener("click", () => {
   resetConversation();
 });
+
+// คลิกเลือกหัวข้อคำถามแนะนำ (Suggestion Chips)
+document.addEventListener("click", (event) => {
+  const chip = event.target.closest(".suggestion-chip");
+  if (chip && !messageInput.disabled) {
+    const prompt = chip.getAttribute("data-prompt") || chip.textContent.trim();
+    if (prompt) {
+      sendMessage(prompt);
+    }
+  }
+});

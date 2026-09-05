@@ -3,11 +3,11 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>AI Chatbot</title>
+    <title>อนันต์ มวยไทย | ผู้ช่วย AI ศาสตร์มวยไทยโบราณ</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,300;0,400;0,500;0,600;0,700;1,600&family=Cinzel:wght@600;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/static/css/style.css" />
@@ -15,20 +15,56 @@
     <script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.7/dist/purify.min.js"></script>
   </head>
   <body>
+    <div class="ring-lights"></div>
     <div class="app-container">
       <header class="app-header">
-        <div class="app-header-text">
-          <h1>AI Chatbot</h1>
-          <span class="app-subtitle">พิมพ์ข้อความเพื่อเริ่มคุยกับผู้ช่วย AI</span>
+        <div class="app-brand">
+          <div class="brand-badge">
+            <span class="badge-icon">🥊</span>
+          </div>
+          <div class="app-header-text">
+            <div class="title-row">
+              <h1>อนันต์ มวยไทย</h1>
+              <span class="status-indicator" title="พร้อมสนทนา">
+                <span class="status-dot"></span> สังเวียนเปิด
+              </span>
+            </div>
+            <span class="app-subtitle">ผู้รอบรู้ศาสตร์และศิลปะแม่ไม้มวยไทยโบราณ</span>
+          </div>
         </div>
         <button id="new-chat-button" class="new-chat-button" type="button" title="เริ่มบทสนทนาใหม่ (ล้างความจำของ session นี้)">
-          เริ่มใหม่
+          <span class="btn-icon">🔄</span> เริ่มยกใหม่
         </button>
       </header>
 
       <main id="chat-window" class="chat-window">
         <div id="empty-state" class="empty-state">
-          <p>สวัสดีครับ พิมพ์ข้อความด้านล่างเพื่อเริ่มคุยได้เลย</p>
+          <div class="empty-state-card">
+            <div class="empty-state-icon-wrap">
+              <span class="empty-state-icon">🥊</span>
+            </div>
+            <h2>ยินดีต้อนรับสู่สังเวียนมวยไทย</h2>
+            <p>
+              ข้าคือ <strong>"อนันต์"</strong> ผู้หลงใหลในศาสตร์มวยไทยโบราณ พร้อมแลกเปลี่ยนเรื่องแม่ไม้ ลูกไม้ ประวัติศาสตร์ หรือท่วงท่าการต่อสู้ ถามข้าได้เลย!
+            </p>
+            <div class="suggestions-container">
+              <span class="suggestions-title">⚡ หัวข้อประลองความรู้:</span>
+              <div class="suggestions-grid">
+                <button type="button" class="suggestion-chip" data-prompt="แนะนำ 15 แม่ไม้มวยไทยโบราณ มีท่าอะไรบ้างและใช้อย่างไร?">
+                  <span class="chip-icon">🔥</span> 15 แม่ไม้มวยไทยโบราณ
+                </button>
+                <button type="button" class="suggestion-chip" data-prompt="ประวัติศาสตร์มวยคาดเชือกมีความเป็นมาอย่างไร ต่างจากมวยไทยปัจจุบันตรงไหน?">
+                  <span class="chip-icon">📜</span> กำเนิดมวยคาดเชือก
+                </button>
+                <button type="button" class="suggestion-chip" data-prompt="อธิบายท่าจระเข้ฟาดหางกับหักงวงไอยรา เป็นท่าแบบไหนและใช้อย่างไร?">
+                  <span class="chip-icon">⚡</span> จระเข้ฟาดหาง & หักงวงไอยรา
+                </button>
+                <button type="button" class="suggestion-chip" data-prompt="แนะนำวิธีฝึกสเต็ปเท้าและการออกหมัด-ศอกสำหรับผู้เริ่มต้น">
+                  <span class="chip-icon">🥋</span> ทักษะเบื้องต้นสำหรับผู้ฝึก
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
         <div id="loading-indicator" class="loading-indicator hidden">
           <span class="dot"></span><span class="dot"></span><span class="dot"></span>
@@ -38,16 +74,23 @@
       <div id="error-banner" class="error-banner hidden"></div>
 
       <form id="chat-form" class="chat-form">
-        <input
-          id="message-input"
-          class="message-input"
-          type="text"
-          placeholder="พิมพ์ข้อความ..."
-          autocomplete="off"
-          required
-        />
-        <button id="send-button" class="send-button" type="submit">ส่ง</button>
-        <button id="stop-button" class="stop-button hidden" type="button">หยุด</button>
+        <div class="input-wrapper">
+          <input
+            id="message-input"
+            class="message-input"
+            type="text"
+            placeholder="ถามเรื่องแม่ไม้มวยไทย กลเม็ดท่าทาง หรือประวัติศาสตร์..."
+            autocomplete="off"
+            required
+          />
+        </div>
+        <button id="send-button" class="send-button" type="submit">
+          <span>ส่งหมัด</span>
+          <span class="send-icon">💥</span>
+        </button>
+        <button id="stop-button" class="stop-button hidden" type="button">
+          <span>หยุด</span>
+        </button>
       </form>
     </div>
 
